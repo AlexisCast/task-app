@@ -17,22 +17,33 @@ async function main() {
 	const usersCollection = db.collection("users");
 
 	await usersCollection
-		.updateOne({ name: "123" }, { $set: { name: "Mike" } })
-		.then(
-			(res) => console.log(res),
-			(err) => console.log(err)
-		);
+		.deleteMany({
+			age: 33,
+		})
+		.then((result) => {
+			if (result.deletedCount === 0) {
+				console.log("Nothing was deleted!");
+			}
+			console.log(result);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 
-	await usersCollection
-		.updateOne(
-			{ _id: new ObjectId("64dfd9c9b85984398a5d32bd") },
-			{ $inc: { age: 1 } }
-		)
-		.then(
-			(res) => console.log(res),
-
-			(err) => console.log(err)
-		);
+	const taskCollection = db.collection("task");
+	await taskCollection
+		.deleteOne({
+			description: "Check email",
+		})
+		.then((result) => {
+			if (result.deletedCount === 0) {
+				console.log("Nothing was deleted!");
+			}
+			console.log(result);
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 
 	return "done.";
 }
