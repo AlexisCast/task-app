@@ -13,24 +13,26 @@ async function main() {
 	console.log("Connected successfully to server");
 
 	const db = client.db(databaseName);
+
 	const usersCollection = db.collection("users");
 
-	const result = await usersCollection.findOne({ name: "Tar" });
-	if (!result) {
-		console.log(`No documents found`);
-	} else {
-		console.log(result);
-	}
+	await usersCollection
+		.updateOne({ name: "123" }, { $set: { name: "Mike" } })
+		.then(
+			(res) => console.log(res),
+			(err) => console.log(err)
+		);
 
-	const findResult = await usersCollection.find({ name: "Tar" });
-	const test = await findResult.toArray();
-	console.log(test);
-	console.log(test.length);
+	await usersCollection
+		.updateOne(
+			{ _id: new ObjectId("64dfd9c9b85984398a5d32bd") },
+			{ $inc: { age: 1 } }
+		)
+		.then(
+			(res) => console.log(res),
 
-	const taskCollection = db.collection("task");
-
-	const findResultTask = await taskCollection.find({ completed: false });
-	console.log(await findResultTask.toArray());
+			(err) => console.log(err)
+		);
 
 	return "done.";
 }
