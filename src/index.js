@@ -27,4 +27,4 @@ const main = async () => {
 	await user.populate('tasks');
 	console.log(user.tasks)
 };
-main();
+// main();
