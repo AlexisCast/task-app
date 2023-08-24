@@ -22,13 +22,17 @@ router.post("/tasks", auth, async (req, res) => {
 });
 
 router.get("/tasks", auth, async (req, res) => {
+	const match = {};
+
+	if (req.query.completed) {
+		match.completed = req.query.completed === "true";
+	}
+
 	try {
-		/* 
-		const tasks = await Task.find({owner: req.user._id});
-		res.send(tasks);
-		//OR
-		 */
-		await req.user.populate("tasks");
+		await req.user.populate({
+			path: "tasks",
+			match,
+		});
 		res.send(req.user.tasks);
 	} catch (e) {
 		res.status(400).send();
@@ -88,7 +92,7 @@ router.delete("/tasks/:id", auth, async (req, res) => {
 			_id: req.params.id,
 			owner: req.user._id,
 		});
-		
+
 		if (!task) {
 			return res.status(400).send();
 		}
