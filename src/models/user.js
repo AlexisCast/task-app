@@ -4,53 +4,58 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Task = require("../models/task");
 
-const userSchema = new mongoose.Schema({
-	name: {
-		type: String,
-		required: true,
-		trim: true,
-	},
-	email: {
-		type: String,
-		unique: true,
-		required: true,
-		trim: true,
-		lowercase: true,
-		validate(value) {
-			if (!validator.isEmail(value)) {
-				throw new Error("Email is invalid", Error);
-			}
+const userSchema = new mongoose.Schema(
+	{
+		name: {
+			type: String,
+			required: true,
+			trim: true,
 		},
-	},
-	password: {
-		type: String,
-		required: true,
-		trim: true,
-		minlength: 7,
-		validate(value) {
-			if (value.toLowerCase().includes("password")) {
-				throw new Error("Password cannot contain 'password'");
-			}
-		},
-	},
-	age: {
-		type: Number,
-		default: 0,
-		validate(value) {
-			if (value < 0) {
-				throw new Error("Age must be a positive number");
-			}
-		},
-	},
-	tokens: [
-		{
-			token: {
-				type: String,
-				required: true,
+		email: {
+			type: String,
+			unique: true,
+			required: true,
+			trim: true,
+			lowercase: true,
+			validate(value) {
+				if (!validator.isEmail(value)) {
+					throw new Error("Email is invalid", Error);
+				}
 			},
 		},
-	],
-});
+		password: {
+			type: String,
+			required: true,
+			trim: true,
+			minlength: 7,
+			validate(value) {
+				if (value.toLowerCase().includes("password")) {
+					throw new Error("Password cannot contain 'password'");
+				}
+			},
+		},
+		age: {
+			type: Number,
+			default: 0,
+			validate(value) {
+				if (value < 0) {
+					throw new Error("Age must be a positive number");
+				}
+			},
+		},
+		tokens: [
+			{
+				token: {
+					type: String,
+					required: true,
+				},
+			},
+		],
+	},
+	{
+		timestamps: true,
+	}
+);
 
 // virtual property -> relationship between 2 ententies
 userSchema.virtual("tasks", {
