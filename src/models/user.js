@@ -51,6 +51,13 @@ const userSchema = new mongoose.Schema({
 	],
 });
 
+// virtual property -> relationship between 2 ententies
+userSchema.virtual("tasks", {
+	ref: "Task",
+	localField: "_id",
+	foreignField: "owner",
+});
+
 //accesible on the intances -> instance methods
 userSchema.methods.toJSON = function () {
 	const user = this;
