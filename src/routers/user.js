@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/user");
+const Task = require("../models/task");
 const auth = require("../middleware/auth");
 const router = new express.Router();
 
@@ -101,10 +102,17 @@ router.patch("/users/me", auth, async (req, res) => {
 
 router.delete("/users/me", auth, async (req, res) => {
 	try {
+		console.log("Deleting user: ", req.user._id);
+
+		//Delete associated task
+		await Task.deleteMany({ owner: req.user._id });
+
+		//Delete the user
 		await req.user.deleteOne();
 
 		res.send(req.user);
 	} catch (e) {
+		console.error(e);
 		res.status(500).send();
 	}
 });
