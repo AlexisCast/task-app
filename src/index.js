@@ -26,13 +26,9 @@ const upload = multer({
 	},
 });
 
-const errorMiddleware = (req, res, next) => {
-	throw new Error("From my middleware");
-};
-
 app.post(
 	"/upload",
-	errorMiddleware,
+	upload.single("avatar"),
 	(req, res) => {
 		res.send();
 	},
