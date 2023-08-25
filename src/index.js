@@ -28,7 +28,7 @@ const upload = multer({
 
 app.post(
 	"/upload",
-	upload.single("avatar"),
+	upload.single("upload"),
 	(req, res) => {
 		res.send();
 	},
