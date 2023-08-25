@@ -149,4 +149,14 @@ router.post(
 	}
 );
 
+router.delete("/users/me/avatar", auth, async (req, res) => {
+	try {
+		req.user.avatar = undefined;
+		await req.user.save();
+		res.send();
+	} catch (e) {
+		res.status(400).send();
+	}
+});
+
 module.exports = router;
