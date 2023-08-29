@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendWelcomeEmail = (email, name) => {
-	console.log("Sending welcome email...");
+	// console.log("Sending welcome email...");
 
 	const welcomeMailOption = {
 		from: process.env.NODEMAILER_FROM,
@@ -32,7 +32,7 @@ const sendWelcomeEmail = (email, name) => {
 };
 
 const sendCancelationEmail = (email, name) => {
-	console.log("Sending cancelation email...");
+	// console.log("Sending cancelation email...");
 
 	const cancelationMailOption = {
 		from: process.env.NODEMAILER_FROM,
