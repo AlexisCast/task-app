@@ -108,7 +108,7 @@ router.patch("/users/me", auth, async (req, res) => {
 
 router.delete("/users/me", auth, async (req, res) => {
 	try {
-		console.log("Deleting user: ", req.user._id);
+		// console.log("Deleting user: ", req.user._id);
 
 		//Delete associated task
 		await Task.deleteMany({ owner: req.user._id });

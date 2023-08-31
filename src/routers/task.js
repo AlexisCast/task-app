@@ -4,7 +4,7 @@ const auth = require("../middleware/auth");
 const router = new express.Router();
 
 router.get("/", (req, res) => {
-	res.send("Hello World!");
+	res.send({ text: "Hello World!" });
 });
 
 router.post("/tasks", auth, async (req, res) => {
@@ -108,7 +108,7 @@ router.delete("/tasks/:id", auth, async (req, res) => {
 		});
 
 		if (!task) {
-			return res.status(400).send();
+			return res.status(404).send();
 		}
 
 		res.send(task);
